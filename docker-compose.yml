@@ -1,0 +1,30 @@
+version: "3"
+services: 
+  sql01:
+    build: ./Master/.
+    image: sql01:0.0.4
+    container_name: sql01 
+    stdin_open: true
+    tty: true
+    extra_hosts: 
+    - "mysql01: 10.0.2.101"
+    - "mysql02: 10.0.2.102"
+    volumes: 
+    - ./data/mysql01:/var/lib/mysql/
+    # - ./Master/Config:/etc/mysql
+    # environment:
+    # - "constraint:node==ews002"
+  sql02:
+    build: ./Slave/.
+    image: sql02:0.0.4
+    container_name: sql02 
+    stdin_open: true
+    tty: true
+    extra_hosts: 
+    - "mysql01: 10.0.2.101"
+    - "mysql02: 10.0.2.102"
+    volumes: 
+    - ./data/mysql02:/var/lib/mysql/
+    # - ./Slave/Config:/etc/mysql
+    # environment:
+    # - "constraint:node==ws007"
